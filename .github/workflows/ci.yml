@@ -1,0 +1,19 @@
+on: [push, pull_request]
+jobs:
+  rclex_test:
+    runs-on: ubuntu-latest
+    container: ros:dashing
+
+    steps:
+        # clone latest branch
+        - name: clone
+          uses: actions/checkout@v2
+
+        - name: init_elixir
+          run: ./init_elixir.sh
+
+        - name: test 
+          run: |
+            mix local.hex --force
+            mix deps.get
+            mix test
